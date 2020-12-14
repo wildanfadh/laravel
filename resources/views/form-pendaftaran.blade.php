@@ -18,48 +18,66 @@
         <div class="col-md-8 col-xl-6">
         <h1>Pendaftaran Mahasiswa</h1>
         <hr>
-        <form action="{{url('/proses-form')}}" method="GET">
+
+
+        <form action="{{url('/proses-form-request')}}" method="POST">
+            @csrf
             <div class="form-group">
                 <label for="nim">NIM</label>
-                <input type="text" class="form-control" id="nim" name="nim">
+                <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim" value="{{ old('nim') }}">
+                @error('nim')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="nama">Nama Lengkap</label>
-                <input type="text" class="form-control" id="nama" name="nama">
+                <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}">
+                @error('nama')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" name="email">
+                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                @error('email')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label>Jenis Kelamin</label>
                 <div class="form-check form-check-inline">
-                    <input type="radio" class="form-check-input" id="laki_laki" name="jenis_kelamin" value="L">
+                    <input type="radio" class="form-check-input" id="laki_laki" name="jenis_kelamin" value="L" {{ old('jenis_kelamin')=='L' ? 'chacked':'' }}>
                     <label class="form-check-label" for="laki_laki">Laki-laki</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="radio" class="form-check-input" id="perempuan" name="jenis_kelamin" value="P">
+                    <input type="radio" class="form-check-input" id="perempuan" name="jenis_kelamin" value="P" {{ old('jenis_kelamin')=='P' ? 'chacked':'' }}>
                     <label class="form-check-label" for="perempuan">Perempuan</label>
                 </div>
+                @error('jenis_kelamin')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="jurusan">Jurusan</label>
                 <select class="form-control" name="jurusan" id="jurusan"> 
-                    <option value="Teknik Informatika">Teknik Informatika</option>
-                    <option value="Sistem Informasi">Sistem Informasi</option>
-                    <option value="Ilmu Komputer">Ilmu Komputer</option>
-                    <option value="Teknik Komputer">Teknik Komputer</option>
-                    <option value="Teknik Telekomunikasi">Teknik Telekomunikasi</option>
+                    <option value="Teknik Informatika" {{ old('jurusan')=='Teknik Informatika' ? 'selected':'' }}>Teknik Informatika</option>
+                    <option value="Sistem Informasi" {{ old('jurusan')=='Sistem Informasi' ? 'selected':'' }}>Sistem Informasi</option>
+                    <option value="Ilmu Komputer" {{ old('jurusan')=='Ilmu Komputer' ? 'selected':'' }}>Ilmu Komputer</option>
+                    <option value="Teknik Komputer" {{ old('jurusan')=='Teknik Komputer' ? 'selected':'' }}>Teknik Komputer</option>
+                    <option value="Teknik Telekomunikasi" {{ old('jurusan')=='Teknik Telekomunikasi' ? 'selected':'' }}>Teknik Telekomunikasi</option>
                 </select>
+                @error('jurusan')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="alamat">Alamat</label>
-                <textarea class="form-control" id="alamat" rows="3" name="alamat"></textarea>
+                <textarea class="form-control" id="alamat" rows="3" name="alamat">{{ old('alamat') }}</textarea>
             </div>
 
             <button type="submit" class="btn btn-primary mb-2">Daftar</button>
