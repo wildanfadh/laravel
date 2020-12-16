@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\DaftarMahasiswa;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,7 @@ use App\Models\Mahasiswa;
 class MahasiswaController extends Controller
 {
 
-	// Function untuk DB:Facade
+    // Function untuk DB:Facade
 
     // public function index() {
     //     return "Berhasil di proses";
@@ -110,7 +111,7 @@ class MahasiswaController extends Controller
 
 
 
-	// function untuk Query Builder
+    // function untuk Query Builder
 
 
     // public function insert() {
@@ -386,13 +387,13 @@ class MahasiswaController extends Controller
     // public function all(){
     //     $result = Mahasiswa::all();
 
-        // dump($result);
-        
-        // echo($result[0]->id).'<br>';
-        // echo($result[0]->nim).'<br>';
-        // echo($result[0]->nama).'<br>';
-        // echo($result[0]->tanggal_lahir).'<br>';
-        // echo($result[0]->ipk).'<br>';
+    // dump($result);
+
+    // echo($result[0]->id).'<br>';
+    // echo($result[0]->nim).'<br>';
+    // echo($result[0]->nama).'<br>';
+    // echo($result[0]->tanggal_lahir).'<br>';
+    // echo($result[0]->ipk).'<br>';
 
     //     foreach ($result as $mahasiswa) {
     //         echo($mahasiswa->id).'<br>';
@@ -475,72 +476,93 @@ class MahasiswaController extends Controller
     //     return "Berhasil di hapus secara permanent";
     // }
 
+
+
     // Function untuk Form Validation
 
-    public function index()
+    // public function index()
+    // {
+    //     return view('form-pendaftaran');
+    // }
+
+    // public function prosesForm(Request $request)
+    // {
+    //     $validateData = $request->validate([
+    //         'nim' => 'required|size:8',
+    //         'nama' => 'required|min:3|max:50',
+    //         'email' => 'required|email',
+    //         'jenis_kelamin' => 'required|in:P,L',
+    //         'jurusan' => 'required',
+    //         'alamat' => '',
+    //     ]);
+
+    //     dump($validateData);
+
+    //     echo $validateData['nim'];             echo "<br>";
+    //     echo $validateData['nama'];            echo "<br>";
+    //     echo $validateData['email'];           echo "<br>";
+    //     echo $validateData['jenis_kelamin'];   echo "<br>";
+    //     echo $validateData['jurusan'];         echo "<br>";
+    //     echo $validateData['alamat'];          
+    // }
+
+    // public function prosesFormValidator(Request $request)
+    // {
+    //     $rules = [
+    //         'nim'           => 'required|size:8',
+    //         'nama'          => 'required|min:3|max:50',
+    //         'email'         => 'required|email',
+    //         'jenis_kelamin' => 'required|in:P,L',
+    //         'alamat'        => '',
+    //     ];
+
+    //     $error_message = [
+    //         'required'  => ':attribute wajib diisi.',
+    //         'size'      => ':attribute harus berukuran :size  karakter.',
+    //         'max'       => ':attribute maksimal berisi :max karakter.',
+    //         'min'       => ':attribute minimal berisi :min karakter',
+    //         'email'     => ':attribute harus diisi dengan alamat email yang valid',
+    //         'in'        => ':attribute yang dipilih tidak valid.',
+    //     ];
+
+    //     $validator = Validator::make($request->all(), $rules, $error_message);
+
+    //     if ($validator->fails()) {
+    //         return redirect('/')->withErrors($validator)->withInput();
+    //     } else {
+    //         echo $request->nim;            echo "<br>";
+    //         echo $request->nama;           echo "<br>";
+    //         echo $request->email;          echo "<br>";
+    //         echo $request->jenis_kelamin;  echo "<br>";
+    //         echo $request->jurusan;        echo "<br>";
+    //         echo $request->alamat;         echo "<br>";
+    //     }
+    // }
+
+    // public function prosesFormRequest(DaftarMahasiswa $request)
+    // {
+    //     $validateData = $request->validated();
+    //     dump($validateData);
+    // }
+
+
+    // Function untuk Localization
+
+    public function formPendaftaran($locale = 'id')
     {
+        App::setlocale($locale);
         return view('form-pendaftaran');
     }
 
     public function prosesForm(Request $request)
     {
         $validateData = $request->validate([
-            'nim' => 'required|size:8',
-            'nama' => 'required|min:3|max:50',
-            'email' => 'required|email',
-            'jenis_kelamin' => 'required|in:P,L',
-            'jurusan' => 'required',
-            'alamat' => '',
-        ]);
-
-        dump($validateData);
-
-        echo $validateData['nim'];             echo "<br>";
-        echo $validateData['nama'];            echo "<br>";
-        echo $validateData['email'];           echo "<br>";
-        echo $validateData['jenis_kelamin'];   echo "<br>";
-        echo $validateData['jurusan'];         echo "<br>";
-        echo $validateData['alamat'];          
-    }
-
-    public function prosesFormValidator(Request $request)
-    {
-        $rules = [
             'nim'           => 'required|size:8',
             'nama'          => 'required|min:3|max:50',
             'email'         => 'required|email',
             'jenis_kelamin' => 'required|in:P,L',
             'alamat'        => '',
-        ];
-
-        $error_message = [
-            'required'  => ':attribute wajib diisi.',
-            'size'      => ':attribute harus berukuran :size  karakter.',
-            'max'       => ':attribute maksimal berisi :max karakter.',
-            'min'       => ':attribute minimal berisi :min karakter',
-            'email'     => ':attribute harus diisi dengan alamat email yang valid',
-            'in'        => ':attribute yang dipilih tidak valid.',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $error_message);
-
-        if ($validator->fails()) {
-            return redirect('/')->withErrors($validator)->withInput();
-        } else {
-            echo $request->nim;            echo "<br>";
-            echo $request->nama;           echo "<br>";
-            echo $request->email;          echo "<br>";
-            echo $request->jenis_kelamin;  echo "<br>";
-            echo $request->jurusan;        echo "<br>";
-            echo $request->alamat;         echo "<br>";
-        }
-    }
-       
-    public function prosesFormRequest(DaftarMahasiswa $request)
-    {
-        $validateData = $request->validated();
+        ]);
         dump($validateData);
     }
-    
-
 }
